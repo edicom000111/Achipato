@@ -1,6 +1,5 @@
 package yio.tro.achipato;
 
-import android.util.Log;
 import com.badlogic.gdx.Gdx;
 
 import java.util.ArrayList;
@@ -122,6 +121,7 @@ public class Graph {
             for (Bubble obstacle : gameController.obstacles) gameController.waypointGraph.deactivateSomePointsByObstacle(obstacle);
         }
         if (module instanceof ModuleDefense) gameController.defenseModuleList.remove(module);
+        if (module instanceof ModuleCannon) gameController.cannonModuleList.remove(module);
         destroyAllLinksWithThisModule(module);
 
         ListIterator iterator = modules.listIterator();

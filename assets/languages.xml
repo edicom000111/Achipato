@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<languages>
+    <language name="en_UK">
+        <!-- Main menu -->
+        <string key="main_menu_info" value="Info"/>
+        <string key="main_menu_exit" value="Exit"/>
+        <string key="main_menu_something" value="White text about nothing"/>
+
+        <string key="menu_campaign" value="Campaign"/>
+        <string key="menu_skirmish" value="Skirmish"/>
+        <string key="menu_level" value="Level"/>
+        <string key="menu_reset" value="Reset"/>
+        <string key="sound" value="Sound"/>
+
+        <!-- Info -->
+        <string key="info_back" value="Back"/>
+        <string key="info_array" value="This is a simple strategy
+        #game in minimalistic style.
+        #It's free and has no ads or donate.
+        #If this is your first run
+        #I recommend going through tutorial.
+        #
+        #
+        #
+        #
+        #
+        #
+        #
+        #
+        #
+        #E-mail: yiotro93@gmail.com
+        #Made by yiotro
+		"/>
+        <string key="reset_campaign_data" value="Reset data"/>
+
+        <!-- Game settings -->
+        <string key="game_settings_main_menu" value="Main menu"/>
+        <string key="game_settings_choose_how_to_play" value="Choose how to play"/>
+        <string key="game_settings_ai_difficulty" value="AI difficulty"/>
+        <string key="game_settings_ai_very_easy" value="very easy"/>
+        <string key="game_settings_ai_easy" value="easy"/>
+        <string key="game_settings_ai_normal" value="normal"/>
+        <string key="game_settings_ai_hard" value="hard"/>
+        <string key="game_settings_game_speed" value="Game speed"/>
+        <string key="game_settings_speed_very_slow" value="very slow"/>
+        <string key="game_settings_speed_slow" value="slow"/>
+        <string key="game_settings_speed_medium" value="medium"/>
+        <string key="game_settings_speed_fast" value="fast"/>
+        <string key="game_settings_map_size" value="Map size"/>
+        <string key="game_settings_map_size_little" value="little"/>
+        <string key="game_settings_map_size_average" value="average"/>
+        <string key="game_settings_map_size_big" value="big"/>
+        <string key="game_settings_map_size_giant" value="giant"/>
+        <string key="game_settings_tutorial" value="Tutorial"/>
+        <string key="game_settings_start" value="Start"/>
+
+        <!-- In game menu -->
+        <string key="in_game_menu_resume" value="Resume"/>
+        <string key="in_game_menu_new_game" value="Choose level"/>
+        <string key="in_game_menu_surrender" value="Surrender"/>
+        <string key="in_game_menu_main_menu" value="Main menu"/>
+        <string key="in_game_menu_restart" value="Restart"/>
+
+        <!-- Tutorial -->
+        <string key="how_to_play" value="How to play?"/>
+        <string key="tutorial_ok" value="Ok"/>
+        <string key="tutorial_hello" value="Greetings!/Your base is in bottom left corner./Enemy base is in top right corner./To win you have to destroy/enemy base."/>
+        <string key="tutorial_press_somewhere" value="You have an army./Tap somewhere in the/middle of screen to/send you army there./"/>
+        <string key="tutorial_build_something" value="You can construct buildings./To do this just tap button/at the bottom strip./Under each button - cost./Now, build something./ /"/>
+        <string key="tutorial_about_modules" value="Building with dollar on it - extractor,/it makes money. To the left - barracks,/they train your army. Next - defense/tower, it shoots enemies. Building with/eye on it gives visibility./ / /"/>
+        <string key="tutorial_about_building_modules" value="New building can be built only/near others./To choose manually where to place/your building, just drag it from/bottom strip."/>
+        <string key="tutorial_about_canceling" value="You can cancel buildings./To do this just tap/red 'X' in top left corner./Do it now./ /"/>
+        <string key="tutorial_destroy_your_enemy" value="Now, attack your enemy and crush him./ / /"/>
+        <string key="you_completed_tutorial" value="You completed tutorial"/>
+
+        <!-- Levels -->
+        <string key="level_3" value="Destroy enemy army/and then destroy/his base"/>
+        <string key="level_4" value="Build many barracks/to create big army"/>
+        <string key="level_5" value="Enemy has big army./Quickly, build many/defense towers./destroy his army/and then crush him."/>
+        <string key="level_10" value="Enemy has big base./But you have much money./And army."/>
+        <string key="level_11" value="Keep the enemy onslaught/using defensive towers."/>
+        <string key="level_15" value="Your cash is small,/but you don't need/some of your buildings./Cancel them and build others."/>
+        <string key="level_29" value="Your current base is too weak/Cancel everything and/start from scratch."/>
+
+        <!-- End game menu -->
+        <string key="end_game_ok" value="Ok"/>
+        <string key="end_game_player_won" value="You won"/>
+        <string key="end_game_computer_won" value="Computer won"/>
+        <string key="statistics" value="Statistics"/>
+        <string key="next" value="Next"/>
+
+        <!-- Statistics -->
+        <string key="statistics_bases_captured" value="Bases captured"/>
+        <string key="statistics_fights_won" value="Fights won"/>
+        <string key="statistics_starships_launched" value="Aggression"/>
+        <string key="statistics_upgrades_made" value="Upgrades made"/>
+        <string key="statistics_game_duration" value="Game duration"/>
+        <string key="statistics_player" value="Player"/>
+        <string key="statistics_computer" value="Computer"/>
+    </language>
+
+
+
+
+
+
+
+
+
+    <language name="ru_RU">
+        <!-- Main menu -->
+        <string key="main_menu_info" value="Инфо"/>
+        <string key="main_menu_exit" value="Выход"/>
+        <string key="main_menu_something" value="Белый текст ни о чем"/>
+
+        <string key="menu_campaign" value="Кампания"/>
+        <string key="menu_skirmish" value="Быстрая игра"/>
+        <string key="menu_level" value="Уровень"/>
+        <string key="menu_reset" value="Сбросить"/>
+        <string key="sound" value="Звук"/>
+
+        <!-- Info -->
+        <string key="info_back" value="Назад"/>
+        <string key="info_array" value="Это простая стратегия в
+        #минималистичном стиле.
+        #Игра бесплатна, в ней нету
+        #ни рекламы ни доната.
+        #Чтобы узнать правила игры
+        #советую пройти обучение.
+        #
+        #
+        #
+        #
+        #
+        #
+        #
+        #
+        #
+        #
+        #E-mail: yiotro93@gmail.com
+        #Игру сделал yiotro
+		"/>
+        <string key="reset_campaign_data" value="Стереть данные"/>
+
+        <!-- Game settings -->
+        <string key="game_settings_main_menu" value="Назад"/>
+        <string key="game_settings_choose_how_to_play" value="Выберите как играть"/>
+        <string key="game_settings_ai_difficulty" value="Уровень ИИ"/>
+        <string key="game_settings_ai_very_easy" value="очень легкий"/>
+        <string key="game_settings_ai_easy" value="легкий"/>
+        <string key="game_settings_ai_normal" value="нормальный"/>
+        <string key="game_settings_ai_hard" value="сложный"/>
+        <string key="game_settings_game_speed" value="Скорость игры"/>
+        <string key="game_settings_speed_very_slow" value="неторопливая"/>
+        <string key="game_settings_speed_slow" value="медленная"/>
+        <string key="game_settings_speed_medium" value="средняя"/>
+        <string key="game_settings_speed_fast" value="быстрая"/>
+        <string key="game_settings_map_size" value="Размер карты"/>
+        <string key="game_settings_map_size_little" value="маленький"/>
+        <string key="game_settings_map_size_average" value="обычный"/>
+        <string key="game_settings_map_size_big" value="большой"/>
+        <string key="game_settings_map_size_giant" value="огромный"/>
+        <string key="game_settings_tutorial" value="Обучение"/>
+        <string key="game_settings_start" value="Начать"/>
+
+        <!-- In game menu -->
+        <string key="in_game_menu_resume" value="Продолжить"/>
+        <string key="in_game_menu_new_game" value="Уровни"/>
+        <string key="in_game_menu_surrender" value="Сдаться"/>
+        <string key="in_game_menu_main_menu" value="Главное меню"/>
+        <string key="in_game_menu_restart" value="Заново"/>
+
+        <!-- Tutorial -->
+        <string key="how_to_play" value="Как играть?"/>
+        <string key="tutorial_ok" value="Хорошо"/>
+        <string key="tutorial_hello" value="Здравствуйте!/Слева снизу - ваша база./Справа сверху - враг./Для победы нужно снести/все постройки врага."/>
+        <string key="tutorial_press_somewhere" value="У вас есть армия./Нажмите где-нибудь по/центру экрана чтобы/послать ее туда./"/>
+        <string key="tutorial_build_something" value="Вы можете строить здания./Для этого нажмите на любой/из пяти кружочков снизу./Под ними - стоимость постройки./Постройте несколько зданий./ /"/>
+        <string key="tutorial_about_modules" value="Кружок с долларом - экстрактор,/он делает деньги. Слева от него бараки,/они создают армию. Левее - защитная/башня, для обороны. Кружок с глазом/дает видимость,/он полезен для разведки./"/>
+        <string key="tutorial_about_building_modules" value="Новые строения можно строить/только рядом со старыми./Чтобы выбрать место, где построить,/просто перетащите вверх один/из кругов на нижней полоске."/>
+        <string key="tutorial_about_canceling" value="Строения можно отменять./Для этого нажмите на красный/крестик слева сверху./Сделайте это сейчас./ /"/>
+        <string key="tutorial_destroy_your_enemy" value="Направьте свою армию на/базу врага и уничтожьте его./ / /"/>
+        <string key="you_completed_tutorial" value="Вы прошли обучение"/>
+
+        <!-- Levels -->
+        <string key="level_3" value="Уничтожьте армию врага./А затем и его базу."/>
+        <string key="level_4" value="Постройте много барраков/чтобы создать большую армию."/>
+        <string key="level_5" value="У врага большая армия./Срочно постройте много/защитных башен./Уничтожьте его армию/а потом нападайте."/>
+        <string key="level_10" value="У врага большая база./Но у вас много денег/и есть армия."/>
+        <string key="level_11" value="Сдержите натиск врага/с помощью защитных башен."/>
+        <string key="level_15" value="У вас мало денег,/но много ненужных построек/снесите их и постройте другие."/>
+        <string key="level_29" value="Ваша база слишком слаба./Отмените все и постройте с нуля."/>
+
+        <!-- End game menu -->
+        <string key="end_game_ok" value="Хорошо"/>
+        <string key="end_game_player_won" value="Вы победили!"/>
+        <string key="end_game_computer_won" value="Компьютер победил"/>
+        <string key="statistics" value="Статистика"/>
+        <string key="next" value="Дальше"/>
+
+        <!-- Statistics -->
+        <string key="statistics_bases_captured" value="Баз захвачено"/>
+        <string key="statistics_fights_won" value="Битв выиграно"/>
+        <string key="statistics_starships_launched" value="Агрессия"/>
+        <string key="statistics_upgrades_made" value="Улучшения"/>
+        <string key="statistics_game_duration" value="Время игры"/>
+        <string key="statistics_player" value="Игрок"/>
+        <string key="statistics_computer" value="Комп"/>
+    </language>
+
+
+
+
+
+
+
+
+
+    <language name="uk_UA">
+        <!-- Main menu -->
+        <string key="main_menu_info" value="Инфо"/>
+        <string key="main_menu_exit" value="Выход"/>
+        <string key="main_menu_something" value="Белый текст ни о чем"/>
+
+        <string key="menu_campaign" value="Кампания"/>
+        <string key="menu_skirmish" value="Быстрая игра"/>
+        <string key="menu_level" value="Уровень"/>
+        <string key="menu_reset" value="Сбросить"/>
+        <string key="sound" value="Звук"/>
+
+        <!-- Info -->
+        <string key="info_back" value="Назад"/>
+        <string key="info_array" value="Это простая стратегия в
+        #минималистичном стиле.
+        #Игра бесплатна, в ней нету
+        #ни рекламы ни доната.
+        #Чтобы узнать правила игры
+        #советую пройти обучение
+        #
+        #
+        #
+        #
+        #
+        #
+        #
+        #
+        #E-mail: yiotro93@gmail.com
+        #Игру сделал yiotro
+		"/>
+        <string key="reset_campaign_data" value="Стереть данные"/>
+
+        <!-- Game settings -->
+        <string key="game_settings_main_menu" value="Назад"/>
+        <string key="game_settings_choose_how_to_play" value="Выберите как играть"/>
+        <string key="game_settings_ai_difficulty" value="Уровень ИИ"/>
+        <string key="game_settings_ai_very_easy" value="очень легкий"/>
+        <string key="game_settings_ai_easy" value="легкий"/>
+        <string key="game_settings_ai_normal" value="нормальный"/>
+        <string key="game_settings_ai_hard" value="сложный"/>
+        <string key="game_settings_game_speed" value="Скорость игры"/>
+        <string key="game_settings_speed_very_slow" value="неторопливая"/>
+        <string key="game_settings_speed_slow" value="медленная"/>
+        <string key="game_settings_speed_medium" value="средняя"/>
+        <string key="game_settings_speed_fast" value="быстрая"/>
+        <string key="game_settings_map_size" value="Размер карты"/>
+        <string key="game_settings_map_size_little" value="маленький"/>
+        <string key="game_settings_map_size_average" value="обычный"/>
+        <string key="game_settings_map_size_big" value="большой"/>
+        <string key="game_settings_map_size_giant" value="огромный"/>
+        <string key="game_settings_tutorial" value="Обучение"/>
+        <string key="game_settings_start" value="Начать"/>
+
+        <!-- In game menu -->
+        <string key="in_game_menu_resume" value="Продолжить"/>
+        <string key="in_game_menu_new_game" value="Уровни"/>
+        <string key="in_game_menu_surrender" value="Сдаться"/>
+        <string key="in_game_menu_main_menu" value="Главное меню"/>
+        <string key="in_game_menu_restart" value="Заново"/>
+
+        <!-- Tutorial -->
+        <string key="how_to_play" value="Как играть?"/>
+        <string key="tutorial_ok" value="Хорошо"/>
+        <string key="tutorial_hello" value="Здравствуйте!/Слева снизу - ваша база./Справа сверху - враг./Для победы нужно снести/все постройки врага."/>
+        <string key="tutorial_press_somewhere" value="У вас есть армия./Нажмите где-нибудь по/центру экрана чтобы/послать ее туда./"/>
+        <string key="tutorial_build_something" value="Вы можете строить здания./Для этого нажмите на любой/из пяти кружочков снизу./Под ними - стоимость постройки./Постройте несколько зданий./ /"/>
+        <string key="tutorial_about_modules" value="Кружок с долларом - экстрактор,/он делает деньги. Слева от него бараки,/они создают армию. Левее - защитная/башня, для обороны. Кружок с глазом/дает видимость,/он полезен для разведки./"/>
+        <string key="tutorial_about_building_modules" value="Новые строения можно строить/только рядом со старыми./Чтобы выбрать место, где построить,/просто перетащите вверх один/из кругов на нижней полоске."/>
+        <string key="tutorial_about_canceling" value="Строения можно отменять./Для этого нажмите на красный/крестик слева сверху./Сделайте это сейчас./ /"/>
+        <string key="tutorial_destroy_your_enemy" value="Направьте свою армию на/базу врага и уничтожьте его./ / /"/>
+        <string key="you_completed_tutorial" value="Вы прошли обучение"/>
+
+        <!-- Levels -->
+        <string key="level_3" value="Уничтожьте армию врага./А затем и его базу."/>
+        <string key="level_4" value="Постройте много барраков/чтобы создать большую армию."/>
+        <string key="level_5" value="У врага большая армия./Срочно постройте много/защитных башен./Уничтожьте его армию/а потом нападайте."/>
+        <string key="level_10" value="У врага большая база./Но у вас много денег/и есть армия."/>
+        <string key="level_11" value="Сдержите натиск врага/с помощью защитных башен."/>
+        <string key="level_15" value="У вас мало денег,/но много ненужных построек/снесите их и постройте другие."/>
+        <string key="level_29" value="Ваша база слишком слаба./Отмените все и постройте с нуля."/>
+
+        <!-- End game menu -->
+        <string key="end_game_ok" value="Хорошо"/>
+        <string key="end_game_player_won" value="Вы победили!"/>
+        <string key="end_game_computer_won" value="Компьютер победил"/>
+        <string key="statistics" value="Статистика"/>
+        <string key="next" value="Дальше"/>
+
+        <!-- Statistics -->
+        <string key="statistics_bases_captured" value="Баз захвачено"/>
+        <string key="statistics_fights_won" value="Битв выиграно"/>
+        <string key="statistics_starships_launched" value="Агрессия"/>
+        <string key="statistics_upgrades_made" value="Улучшения"/>
+        <string key="statistics_game_duration" value="Время игры"/>
+        <string key="statistics_player" value="Игрок"/>
+        <string key="statistics_computer" value="Комп"/>
+    </language>
+</languages>

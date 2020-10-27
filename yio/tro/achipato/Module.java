@@ -25,11 +25,19 @@ public abstract class Module {
     Graph graph;
     int price;
     int maxHP, hp;
+
+    int maxSHD = 0;
+    int SHD = 0;
     public static final int MODULE_INDEX_BASE = 0;
     public static final int MODULE_INDEX_BARRACKS = 1;
     public static final int MODULE_INDEX_EXTRACTOR = 2;
     public static final int MODULE_INDEX_LOOKOUT = 3;
     public static final int MODULE_INDEX_DEFENSE = 4;
+    public static final int MODULE_INDEX_BARRICADE = 5;
+    public static final int MODULE_INDEX_CANNON = 6;
+    public static final int MODULE_INDEX_ACADEMY = 7;
+    public static final int MODULE_INDEX_AIRFORCE = 8;
+    public static final int MODULE_INDEX_EMP = 9;
     int index;
     ArrayList<WayPoint> deactivatedWayPoints;
 

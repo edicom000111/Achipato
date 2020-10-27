@@ -1,6 +1,5 @@
 package yio.tro.achipato;
 
-import android.util.Log;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.audio.Sound;
@@ -20,18 +19,30 @@ public class GameController {
     public static final int APPURTENANCE_RED = 1;
     Graph greenGraph, redGraph;
     int dragType;
+    public static final int CHANGE_SOCKET = -1;
     public static final int DRAG_TYPE_NONE = 0;
     public static final int DRAG_TYPE_EXTRACTOR = 1;
     public static final int DRAG_TYPE_BARRACKS = 2;
     public static final int DRAG_TYPE_LOOKOUT = 3;
     public static final int DRAG_TYPE_BASE = 4;
     public static final int DRAG_TYPE_DEFENSE = 5;
+    public static final int DRAG_TYPE_BARRICADE = 6;
+    public static final int DRAG_TYPE_CANNON = 7;
+    public static final int DRAG_TYPE_ACADEMY = 8;
+    public static final int DRAG_TYPE_AIRFORCE = 9;
+    public static final int DRAG_TYPE_EMP = 10;
     public static final int PRICE_BASE = 5;
     public static final int PRICE_LOOKOUT = 15;
-    public static final int PRICE_DEFENSE = 45;
+    public static final int PRICE_DEFENSE = 50;
     public static final int PRICE_BARRACKS = 40;
-    public static final int PRICE_EXTRACTOR = 35;
-    public static final int LASERS_FROM_ONE_MODULE_SIMULTANEOUSLY = 3;
+    public static final int PRICE_EXTRACTOR = 40;
+    public static final int PRICE_BARRICADE = 15;
+    public static final int PRICE_CANNON = 75;
+    public static final int PRICE_ACADEMY = 60;
+    public static final int PRICE_AIRFORCE = 60;
+    public static final int PRICE_EMP = 300;
+    public static final int LASERS_FROM_ONE_DEFENSE_SIMULTANEOUSLY = 5;
+    public static final int LASERS_FROM_ONE_CANNON_SIMULTANEOUSLY = 1;
     public static final int NUMBER_OF_BUBBLES = 200;
     ArrayList<UnitGroup> groupList;
     ArrayList<Light> commandsToGo;
@@ -40,6 +51,7 @@ public class GameController {
     ArrayList<Light> lights;
     ArrayList<Unit> queueToDeath;
     ArrayList<ModuleDefense> defenseModuleList;
+    ArrayList<ModuleCannon> cannonModuleList;
     ArrayList<Bubble> obstacles;
     ArrayList<Bubble> obstacleCache[][];
     double angles[][];
@@ -84,8 +96,9 @@ public class GameController {
         greenGraph = new Graph(this, APPURTENANCE_GREEN);
         redGraph = new Graph(this, APPURTENANCE_RED);
         defenseModuleList = new ArrayList<ModuleDefense>();
+        cannonModuleList = new ArrayList<ModuleCannon>();
         bandHeight = (int)(0.1 * Gdx.graphics.getHeight());
-        leftSide = (int)(0.5 * (Gdx.graphics.getWidth() - 5 * bandHeight));
+        leftSide = (int)(0.5 * (Gdx.graphics.getWidth() - 6 * bandHeight));
         bubbles = new Bubble[NUMBER_OF_BUBBLES];
         for (int i=0; i<NUMBER_OF_BUBBLES; i++) bubbles[i] = new Bubble();
         currentBubbleIndex = 0;
@@ -198,6 +211,7 @@ public class GameController {
             checkForUnitCollisionsWithGraph(APPURTENANCE_RED, greenGraph);
             // check for defense modules
             checkForDefenseCollisions();
+            checkForCannonCollisions();
         }
         if (isBinButtonPressed && currentTime > timeToUnPressBinButton) isBinButtonPressed = false;
         if (currentTime > lastTimeMoneySpawnedNaturally + naturalMoneySpawnDelay) {
@@ -308,8 +322,8 @@ public class GameController {
                 shootCount = 0;
                 mx = (int)(module.visualX / cacheUnitsCellSize);
                 my = (int)(module.visualY / cacheUnitsCellSize);
-                for (int x = Math.max(0, mx - mRadius); x < Math.min(cacheMatrixUnits.length-1, mx + mRadius + 1) && shootCount < LASERS_FROM_ONE_MODULE_SIMULTANEOUSLY; x++) {
-                    for (int y = Math.max(0, my - mRadius); y < Math.min(cacheMatrixUnits[0].length-1, my + mRadius + 1) && shootCount < LASERS_FROM_ONE_MODULE_SIMULTANEOUSLY; y++) {
+                for (int x = Math.max(0, mx - mRadius); x < Math.min(cacheMatrixUnits.length-1, mx + mRadius + 1) && shootCount < LASERS_FROM_ONE_DEFENSE_SIMULTANEOUSLY; x++) {
+                    for (int y = Math.max(0, my - mRadius); y < Math.min(cacheMatrixUnits[0].length-1, my + mRadius + 1) && shootCount < LASERS_FROM_ONE_DEFENSE_SIMULTANEOUSLY; y++) {
                         if (cacheMatrixUnits[x][y].size() > 0) {
                             unit = cacheMatrixUnits[x][y].get(0);
                             if (YioGdxGame.distance(unit.x, unit.y, module.x, module.y) < 3 * GameView.moduleSize && unit.group.appurtenance != module.appurtenance) {
@@ -317,6 +331,7 @@ public class GameController {
                                 yioGdxGame.gameView.createSplat(unit.visualX, unit.visualY);
                                 Beam beam = getNextAvailableBeam();
                                 if (beam != null) {
+                                    beam.type = 0;
                                     beam.set((float)module.visualX, (float)module.visualY, unit.visualX, unit.visualY);
                                     YioGdxGame.playSound(soundLaser);
                                 }
@@ -333,8 +348,8 @@ public class GameController {
                 my = (int)(module.y / greenGraph.cacheCellSize);
                 Graph graph = getEnemyGraph(module.appurtenance);
                 Module m;
-                for (int x = Math.max(0, mx - mRadius); x < Math.min(graph.cacheMatrixModules.length-1, mx + mRadius) && shootCount < LASERS_FROM_ONE_MODULE_SIMULTANEOUSLY; x++) {
-                    for (int y = Math.max(0, my - mRadius); y < Math.min(graph.cacheMatrixModules[0].length-1, my + mRadius) && shootCount < LASERS_FROM_ONE_MODULE_SIMULTANEOUSLY; y++) {
+                for (int x = Math.max(0, mx - mRadius); x < Math.min(graph.cacheMatrixModules.length-1, mx + mRadius) && shootCount < LASERS_FROM_ONE_DEFENSE_SIMULTANEOUSLY; x++) {
+                    for (int y = Math.max(0, my - mRadius); y < Math.min(graph.cacheMatrixModules[0].length-1, my + mRadius) && shootCount < LASERS_FROM_ONE_DEFENSE_SIMULTANEOUSLY; y++) {
                         m = graph.cacheMatrixModules[x][y];
                         if (m != null && m.alive && YioGdxGame.distance(mx, my, x, y) < mRadius && m.inPosition()) {
                             if (m.appurtenance != module.appurtenance) {
@@ -342,6 +357,7 @@ public class GameController {
                                 moduleExplosion(m, 0.02f * yioGdxGame.gameView.moduleSize, 5);
                                 Beam beam = getNextAvailableBeam();
                                 if (beam != null) {
+                                    beam.type = 0;
                                     beam.set((float)module.visualX, (float)module.visualY, (float)m.visualX, (float)m.visualY);
                                     YioGdxGame.playSound(soundLaser);
                                 }
@@ -354,6 +370,78 @@ public class GameController {
             } else continue; //go to next defense module
         }
     }
+
+
+
+    void checkForCannonCollisions() {
+        int mx, my, mRadius;
+        ModuleCannon module;
+        Unit unit;
+        int shootCount;
+        for (int i=cannonModuleList.size()-1; i>=0; i--) {
+            module = cannonModuleList.get(i);
+            if (!module.isConstructing && currentTime > module.lastTimeAttacked + module.attackDelay) {
+                shootCount = 0;
+
+                //now collisions with other modules
+                mRadius = 6;
+                mx = (int)(module.x / greenGraph.cacheCellSize);
+                my = (int)(module.y / greenGraph.cacheCellSize);
+                Graph graph = getEnemyGraph(module.appurtenance);
+                Module m;
+                for (int x = Math.max(0, mx - mRadius); x < Math.min(graph.cacheMatrixModules.length-1, mx + mRadius) && shootCount < LASERS_FROM_ONE_CANNON_SIMULTANEOUSLY; x++) {
+                    for (int y = Math.max(0, my - mRadius); y < Math.min(graph.cacheMatrixModules[0].length-1, my + mRadius) && shootCount < LASERS_FROM_ONE_CANNON_SIMULTANEOUSLY; y++) {
+                        m = graph.cacheMatrixModules[x][y];
+                        if (m != null && m.alive && YioGdxGame.distance(mx, my, x, y) < mRadius && m.inPosition()) {
+                            if (m.appurtenance != module.appurtenance) {
+                                module.lastTimeAttacked = currentTime;
+                                moduleExplosion(m, 0.02f * yioGdxGame.gameView.moduleSize, 5);
+                                Beam beam = getNextAvailableBeam();
+                                if (beam != null) {
+                                    beam.type = 1;
+                                    beam.set((float)module.visualX, (float)module.visualY, (float)m.visualX, (float)m.visualY);
+                                    YioGdxGame.playSound(soundLaser);
+                                }
+                                attackModule(m, 5);
+                                shootCount++;
+                            }
+                        }
+                    }
+                }
+
+
+
+
+
+                mRadius = 12;
+
+                mx = (int)(module.visualX / cacheUnitsCellSize);
+                my = (int)(module.visualY / cacheUnitsCellSize);
+                for (int x = Math.max(0, mx - mRadius); x < Math.min(cacheMatrixUnits.length-1, mx + mRadius + 1) && shootCount < LASERS_FROM_ONE_CANNON_SIMULTANEOUSLY; x++) {
+                    for (int y = Math.max(0, my - mRadius); y < Math.min(cacheMatrixUnits[0].length-1, my + mRadius + 1) && shootCount < LASERS_FROM_ONE_CANNON_SIMULTANEOUSLY; y++) {
+                        if (cacheMatrixUnits[x][y].size() > 0) {
+                            unit = cacheMatrixUnits[x][y].get(0);
+                            if (YioGdxGame.distance(unit.x, unit.y, module.x, module.y) < 6 * GameView.moduleSize && unit.group.appurtenance != module.appurtenance) {
+                                module.lastTimeAttacked = currentTime;
+                                yioGdxGame.gameView.createSplat(unit.visualX, unit.visualY);
+                                Beam beam = getNextAvailableBeam();
+                                if (beam != null) {
+                                    beam.type = 1;
+                                    beam.set((float)module.visualX, (float)module.visualY, unit.visualX, unit.visualY);
+                                    YioGdxGame.playSound(soundLaser);
+                                }
+                                destroyUnit(unit);
+                                shootCount++;
+                            }
+                        }
+                    }
+                }
+
+
+            } else continue; //go to next cannon module
+        }
+    }
+
 
     Graph getEnemyGraph(int appurtenance) {
         if (appurtenance == APPURTENANCE_GREEN) return redGraph;
@@ -400,7 +488,7 @@ public class GameController {
 
     void checkForUnitCollisionsWithGraph(int unitAppurtenance, Graph graph) {
         if (graph.appurtenance == unitAppurtenance) {
-            Log.e("yiotro", "UNIT COLLISION WITH MODULE FAIL : SAME APPURTENANCE");
+            System.out.println("UNIT COLLISION WITH MODULE FAIL : SAME APPURTENANCE");
             return;
         }
         int x, y, radius;
@@ -432,8 +520,26 @@ public class GameController {
     }
 
     void attackModule(Module module) {
-        module.hp -= 1;
-        if (module.isConstructing) module.hp -= 2;
+        if(module.SHD > 0 && !module.isConstructing){
+            module.SHD -= 1;
+        } else {
+            module.hp -= 1;
+            if (module.isConstructing) module.hp -= 2;
+        }
+    }
+
+
+    void attackModule(Module module, int damage) {
+        if(module.SHD > 0 && !module.isConstructing){
+            module.SHD -= damage;
+        }
+        if(module.SHD < 0){
+            damage = -module.SHD;
+            module.SHD = 0;
+        }
+        module.hp -= damage;
+        if (module.isConstructing) module.hp -= 2 * damage;
+
     }
 
     void destroyUnit(Unit unit) {
@@ -501,6 +607,7 @@ public class GameController {
         greenGraph.clear();
         redGraph.clear();
         defenseModuleList.clear();
+        cannonModuleList.clear();
         clearAllUnits();
         clearCacheUnits();
         clearObstaclesAndCache();
@@ -576,6 +683,11 @@ public class GameController {
             case Module.MODULE_INDEX_DEFENSE: return PRICE_DEFENSE;
             case Module.MODULE_INDEX_EXTRACTOR: return PRICE_EXTRACTOR;
             case Module.MODULE_INDEX_LOOKOUT: return PRICE_LOOKOUT;
+            case Module.MODULE_INDEX_BARRICADE: return PRICE_BARRICADE;
+            case Module.MODULE_INDEX_CANNON: return PRICE_CANNON;
+            case Module.MODULE_INDEX_ACADEMY: return PRICE_ACADEMY;
+            case Module.MODULE_INDEX_AIRFORCE: return PRICE_AIRFORCE;
+            case Module.MODULE_INDEX_EMP: return PRICE_EMP;
             default: return 1;
         }
     }
@@ -626,6 +738,7 @@ public class GameController {
                 break;
         }
         if (module instanceof ModuleDefense) defenseModuleList.add((ModuleDefense)module);
+        if (module instanceof ModuleCannon) cannonModuleList.add((ModuleCannon)module);
         return true;
     }
 
@@ -659,6 +772,7 @@ public class GameController {
         dollar.factorModelLighty.beginSlowDestroyProcess();
         dollarAnims.add(dollar);
     }
+
 
     UnitGroup findUnitGroupByAppurtenance(int appurtenance) {
         for (UnitGroup group : groupList)
@@ -813,26 +927,50 @@ public class GameController {
         dragType = DRAG_TYPE_NONE;
         if (currentTouchCount > maxTouchCount) maxTouchCount = currentTouchCount;
         lastTouchCount = currentTouchCount;
-
         // now only lower band stuff
         if (screenY > bandHeight) return;
         if (screenX < leftSide) {
             return;
-        } else if (screenX < leftSide + bandHeight) {
-            dragType = DRAG_TYPE_BASE;
-            dragModuleTexture = yioGdxGame.gameView.textureBaseGreen;
-        } else if (screenX < leftSide + 2 * bandHeight) {
-            dragType = DRAG_TYPE_LOOKOUT;
-            dragModuleTexture = yioGdxGame.gameView.textureLookoutGreen;
-        } else if (screenX < leftSide + 3 * bandHeight) {
-            dragType = DRAG_TYPE_DEFENSE;
-            dragModuleTexture = yioGdxGame.gameView.textureDefenseGreen;
-        } else if (screenX < leftSide + 4 * bandHeight) {
-            dragType = DRAG_TYPE_BARRACKS;
-            dragModuleTexture = yioGdxGame.gameView.textureBarracksGreen;
-        } else if (screenX < leftSide + 5 * bandHeight) {
-            dragType = DRAG_TYPE_EXTRACTOR;
-            dragModuleTexture = yioGdxGame.gameView.textureExtractorGreen;
+        } else {
+            if (screenX >= leftSide + 5 * bandHeight && screenX < leftSide + 6 * bandHeight) {
+                dragType = CHANGE_SOCKET;
+                dragModuleTexture = null;
+            }
+            if(yioGdxGame.gameView.socket == 0) {
+                if (screenX < leftSide + bandHeight) {
+                    dragType = DRAG_TYPE_BASE;
+                    dragModuleTexture = yioGdxGame.gameView.textureBaseGreen;
+                } else if (screenX < leftSide + 2 * bandHeight) {
+                    dragType = DRAG_TYPE_LOOKOUT;
+                    dragModuleTexture = yioGdxGame.gameView.textureLookoutGreen;
+                } else if (screenX < leftSide + 3 * bandHeight) {
+                    dragType = DRAG_TYPE_DEFENSE;
+                    dragModuleTexture = yioGdxGame.gameView.textureDefenseGreen;
+                } else if (screenX < leftSide + 4 * bandHeight) {
+                    dragType = DRAG_TYPE_BARRACKS;
+                    dragModuleTexture = yioGdxGame.gameView.textureBarracksGreen;
+                } else if (screenX < leftSide + 5 * bandHeight) {
+                    dragType = DRAG_TYPE_EXTRACTOR;
+                    dragModuleTexture = yioGdxGame.gameView.textureExtractorGreen;
+                }
+            } else if(yioGdxGame.gameView.socket == 1) {
+                if (screenX < leftSide + bandHeight) {
+                    dragType = DRAG_TYPE_BARRICADE;
+                    dragModuleTexture = yioGdxGame.gameView.textureBarricadeGreen;
+                } else if (screenX < leftSide + 2 * bandHeight) {
+                    dragType = DRAG_TYPE_CANNON;
+                    dragModuleTexture = yioGdxGame.gameView.textureCannonGreen;
+                } else if (screenX < leftSide + 3 * bandHeight) {
+                    dragType = DRAG_TYPE_ACADEMY;
+                    dragModuleTexture = yioGdxGame.gameView.textureAcademyGreen;
+                } else if (screenX < leftSide + 4 * bandHeight) {
+                    dragType = DRAG_TYPE_AIRFORCE;
+                    dragModuleTexture = yioGdxGame.gameView.textureAirForceGreen;
+                } else if (screenX < leftSide + 5 * bandHeight) {
+                    dragType = DRAG_TYPE_EMP;
+                    dragModuleTexture = yioGdxGame.gameView.textureEMPGreen;
+                }
+            }
         }
         this.screenX = screenX;
         this.screenY = screenY;
@@ -855,6 +993,16 @@ public class GameController {
             screenY = 0;
         }
         switch (dragType) {
+            case CHANGE_SOCKET:
+                if (screenX == 0 && screenY == 0) {
+                    yioGdxGame.gameView.socket ++;
+                    if(yioGdxGame.gameView.socket > yioGdxGame.gameView.maxSocket) yioGdxGame.gameView.socket = 0;
+                    dragType = DRAG_TYPE_NONE;
+                    dragModuleTexture = null;
+                    YioGdxGame.playSound(soundBuild);
+                    yioGdxGame.gameView.initLowerBand();
+                }
+                break;
             case DRAG_TYPE_NONE:
                 if (screenY > bandHeight && screenY < Gdx.graphics.getHeight() - bandHeight) {
                     UnitGroup closestGroup = getClosestUnitGroup(screenX, screenY, APPURTENANCE_GREEN, false);
@@ -880,6 +1028,21 @@ public class GameController {
             case DRAG_TYPE_EXTRACTOR:
                 buildModule(new ModuleExtractor(screenX, screenY, APPURTENANCE_GREEN, greenGraph));
                 break;
+            case DRAG_TYPE_BARRICADE:
+                buildModule(new ModuleBarricade(screenX, screenY, APPURTENANCE_GREEN, greenGraph));
+                break;
+            case DRAG_TYPE_CANNON:
+                buildModule(new ModuleCannon(screenX, screenY, APPURTENANCE_GREEN, greenGraph));
+                break;
+            case DRAG_TYPE_ACADEMY:
+                buildModule(new ModuleAcademy(screenX, screenY, APPURTENANCE_GREEN, greenGraph));
+                break;
+            case DRAG_TYPE_AIRFORCE:
+                buildModule(new ModuleAirForce(screenX, screenY, APPURTENANCE_GREEN, greenGraph));
+                break;
+            case DRAG_TYPE_EMP:
+                buildModule(new ModuleEMP(screenX, screenY, APPURTENANCE_GREEN, greenGraph));
+                break;
         }
         dragModuleTexture = null;
     }
@@ -903,6 +1066,18 @@ public class GameController {
                 return leftSide + 3 * bandHeight;
             case DRAG_TYPE_EXTRACTOR:
                 return leftSide + 4 * bandHeight;
+            case DRAG_TYPE_BARRICADE:
+                return leftSide;
+            case DRAG_TYPE_CANNON:
+                return leftSide + bandHeight;
+            case DRAG_TYPE_ACADEMY:
+                return leftSide + 2 * bandHeight;
+            case DRAG_TYPE_AIRFORCE:
+                return leftSide + 3 * bandHeight;
+            case DRAG_TYPE_EMP:
+                return leftSide + 4 * bandHeight;
+            case CHANGE_SOCKET:
+                return leftSide + 5 * bandHeight;
             default:
                 return 0;
         }

@@ -47,6 +47,11 @@ public abstract class ArtificialIntelligence {
             case Module.MODULE_INDEX_DEFENSE: return new ModuleDefense(x, y, appurtenance, graph);
             case Module.MODULE_INDEX_BARRACKS: return new ModuleBarracks(x, y, appurtenance, graph);
             case Module.MODULE_INDEX_BASE: return new ModuleBase(x, y, appurtenance, graph);
+            case Module.MODULE_INDEX_BARRICADE: return new ModuleBarricade(x, y, appurtenance, graph);
+            case Module.MODULE_INDEX_CANNON: return new ModuleCannon(x, y, appurtenance, graph);
+            case Module.MODULE_INDEX_ACADEMY: return new ModuleAcademy(x, y, appurtenance, graph);
+            case Module.MODULE_INDEX_AIRFORCE: return new ModuleAirForce(x, y, appurtenance, graph);
+            case Module.MODULE_INDEX_EMP: return new ModuleEMP(x, y, appurtenance, graph);
             default: return new ModuleBase(x, y, appurtenance, graph);
         }
     }

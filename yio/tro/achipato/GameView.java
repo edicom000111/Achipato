@@ -1,6 +1,5 @@
 package yio.tro.achipato;
 
-import android.util.Log;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -28,11 +27,11 @@ public class GameView {
     SpriteBatch spriteBatch;
     ShapeRenderer shapeRenderer;
     float cx, cy, dw, dh, w, h;
-    TextureRegion textureExtractorGreen, textureBarracksGreen, textureDefenseGreen, textureLookoutGreen, textureBaseGreen;
-    TextureRegion textureExtractorEnemy, textureBarracksEnemy, textureDefenseEnemy, textureLookoutEnemy, textureBaseEnemy;
+    TextureRegion textureExtractorGreen, textureBarracksGreen, textureDefenseGreen, textureLookoutGreen, textureBaseGreen, textureBarricadeGreen, textureCannonGreen, textureAcademyGreen, textureAirForceGreen, textureEMPGreen;
+    TextureRegion textureExtractorEnemy, textureBarracksEnemy, textureDefenseEnemy, textureLookoutEnemy, textureBaseEnemy, textureBarricadeEnemy, textureCannonEnemy, textureAcademyEnemy, textureAirForceEnemy, textureEMPEnemy;
     TextureRegion lowerBand, upperBand, redUnit, magentaUnit, orangeUnit;
-    TextureRegion binTexture, constructionTexture, commandToGoInternalTexture, commandToGoExternalTexture, dollarTexture;
-    TextureRegion greenUnitTexture, enemyUnitTexture, fissureTexture, beamTexture, blackCircleTexture;
+    TextureRegion binTexture, constructionTexture, commandToGoInternalTexture, commandToGoExternalTexture, dollarTexture, shieldTexture;
+    TextureRegion greenUnitTexture, enemyUnitTexture, fissureTexture, beamTexture, laserTexture, blackCircleTexture;
     TextureRegion grayCircle, bloodSplats[];
     int bandHeight, leftSide;
     TextureRegion animationTextureRegion;
@@ -48,6 +47,8 @@ public class GameView {
     int currentSplatIndex;
     int segments;
     float beamThickness;
+    int socket = 0;
+    int maxSocket = 1;
 
 
     public GameView(YioGdxGame yioGdxGame) { //must be called after creation of GameController and MenuView
@@ -81,6 +82,7 @@ public class GameView {
     }
 
 
+
     void loadTextures() {
         backgroundRegion = loadTextureRegionByName("game_background.png", true);
         textureExtractorGreen = loadTextureRegionByName("green/module_extractor.png", true);
@@ -88,18 +90,25 @@ public class GameView {
         textureDefenseGreen = loadTextureRegionByName("green/module_defense.png", true);
         textureLookoutGreen = loadTextureRegionByName("green/module_lookout.png", true);
         textureBaseGreen = loadTextureRegionByName("green/module_base.png", true);
+        textureBarricadeGreen = loadTextureRegionByName("green/module_barricade.png", true);
+        textureCannonGreen = loadTextureRegionByName("green/module_cannon.png", true);
+        textureAcademyGreen = loadTextureRegionByName("green/module_academy.png", true);
+        textureAirForceGreen = loadTextureRegionByName("green/module_airforce.png", true);
+        textureEMPGreen = loadTextureRegionByName("green/module_emp.png", true);
         loadEnemyTextures(0);
         binTexture = loadTextureRegionByName("cancel_icon.png", true);
         constructionTexture = loadTextureRegionByName("construction.png", false);
         commandToGoInternalTexture = loadTextureRegionByName("command_to_go1.png", false);
         commandToGoExternalTexture = loadTextureRegionByName("command_to_go2.png", false);
         dollarTexture = loadTextureRegionByName("dollar.png", false);
+        shieldTexture = loadTextureRegionByName("shield.png", false);
         greenUnitTexture = loadTextureRegionByName("green/unit.png", false);
         redUnit = loadTextureRegionByName("red/unit.png", false);
         magentaUnit = loadTextureRegionByName("magenta/unit.png", false);
         orangeUnit = loadTextureRegionByName("orange/unit.png", false);
         fissureTexture = loadTextureRegionByName("fissure.png", false);
         beamTexture = loadTextureRegionByName("beam.png", false);
+        laserTexture = loadTextureRegionByName("laser.png", false);
         blackCircleTexture = loadTextureRegionByName("black_circle.png", false);
         bloodSplats = new TextureRegion[3];
         bloodSplats[0] = loadTextureRegionByName("blood1.png", false);
@@ -121,6 +130,11 @@ public class GameView {
                 textureDefenseEnemy = loadTextureRegionByName("red/module_defense.png", true);
                 textureLookoutEnemy = loadTextureRegionByName("red/module_lookout.png", true);
                 textureBaseEnemy = loadTextureRegionByName("red/module_base.png", true);
+                textureBarricadeEnemy = loadTextureRegionByName("red/module_barricade.png", true);
+                textureCannonEnemy = loadTextureRegionByName("red/module_cannon.png", true);
+                textureAcademyEnemy = loadTextureRegionByName("red/module_academy.png", true);
+                textureAirForceEnemy = loadTextureRegionByName("red/module_airforce.png", true);
+                textureEMPEnemy = loadTextureRegionByName("red/module_emp.png", true);
                 enemyUnitTexture = redUnit;
                 break;
             case 1:
@@ -129,6 +143,11 @@ public class GameView {
                 textureDefenseEnemy = loadTextureRegionByName("magenta/module_defense.png", true);
                 textureLookoutEnemy = loadTextureRegionByName("magenta/module_lookout.png", true);
                 textureBaseEnemy = loadTextureRegionByName("magenta/module_base.png", true);
+                textureBarricadeEnemy = loadTextureRegionByName("magenta/module_barricade.png", true);
+                textureCannonEnemy = loadTextureRegionByName("magenta/module_cannon.png", true);
+                textureAcademyEnemy = loadTextureRegionByName("magenta/module_academy.png", true);
+                textureAirForceEnemy = loadTextureRegionByName("magenta/module_airforce.png", true);
+                textureEMPEnemy = loadTextureRegionByName("magenta/module_emp.png", true);
                 enemyUnitTexture = magentaUnit;
                 break;
             case 2:
@@ -137,6 +156,11 @@ public class GameView {
                 textureDefenseEnemy = loadTextureRegionByName("orange/module_defense.png", true);
                 textureLookoutEnemy = loadTextureRegionByName("orange/module_lookout.png", true);
                 textureBaseEnemy = loadTextureRegionByName("orange/module_base.png", true);
+                textureBarricadeEnemy = loadTextureRegionByName("orange/module_barricade.png", true);
+                textureCannonEnemy = loadTextureRegionByName("orange/module_cannon.png", true);
+                textureAcademyEnemy = loadTextureRegionByName("orange/module_academy.png", true);
+                textureAirForceEnemy = loadTextureRegionByName("orange/module_airforce.png", true);
+                textureEMPEnemy = loadTextureRegionByName("orange/module_emp.png", true);
                 enemyUnitTexture = orangeUnit;
                 break;
         }
@@ -188,23 +212,37 @@ public class GameView {
     void initLowerBand() {
         bandHeight = (int) (0.1 * Gdx.graphics.getHeight());
         int width = Gdx.graphics.getWidth();
-        leftSide = (int) (0.5 * (width - 5 * bandHeight));
+        leftSide = (int) (0.5 * (width - 6 * bandHeight));
         FrameBuffer frameBuffer = new FrameBuffer(Pixmap.Format.RGB565, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
         frameBuffer.begin();
         Gdx.gl.glClearColor(0.4f, 0.4f, 0.4f, 1); // was 0.58f, 0.58f, 0.58f, 1
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         spriteBatch.begin();
-        spriteBatch.draw(textureExtractorGreen, leftSide + 4.15f * bandHeight, 0.3f * bandHeight, 0.7f * bandHeight, 0.7f * bandHeight);
-        spriteBatch.draw(textureBarracksGreen, leftSide + 3.15f * bandHeight, 0.3f * bandHeight, 0.7f * bandHeight, 0.7f * bandHeight);
-        spriteBatch.draw(textureDefenseGreen, leftSide + 2.15f * bandHeight, 0.3f * bandHeight, 0.7f * bandHeight, 0.7f * bandHeight);
-        spriteBatch.draw(textureLookoutGreen, leftSide + 1.15f * bandHeight, 0.3f * bandHeight, 0.7f * bandHeight, 0.7f * bandHeight);
-        spriteBatch.draw(textureBaseGreen, leftSide + 0.15f * bandHeight, 0.3f * bandHeight, 0.7f * bandHeight, 0.7f * bandHeight);
-        YioGdxGame.lowerBandFont.draw(spriteBatch, "$" + GameController.PRICE_BASE, leftSide + 0.3f * bandHeight, 0.3f * bandHeight);
-        YioGdxGame.lowerBandFont.draw(spriteBatch, "$" + GameController.PRICE_LOOKOUT, leftSide + 1.2f * bandHeight, 0.3f * bandHeight);
-        YioGdxGame.lowerBandFont.draw(spriteBatch, "$" + GameController.PRICE_DEFENSE, leftSide + 2.2f * bandHeight, 0.3f * bandHeight);
-        YioGdxGame.lowerBandFont.draw(spriteBatch, "$" + GameController.PRICE_BARRACKS, leftSide + 3.2f * bandHeight, 0.3f * bandHeight);
-        YioGdxGame.lowerBandFont.draw(spriteBatch, "$" + GameController.PRICE_EXTRACTOR, leftSide + 4.2f * bandHeight, 0.3f * bandHeight);
+        spriteBatch.draw(binTexture, leftSide + 5.15f * bandHeight, 0.3f * bandHeight, 0.7f * bandHeight, 0.7f * bandHeight);
+        if(socket == 0) {
+            spriteBatch.draw(textureExtractorGreen, leftSide + 4.15f * bandHeight, 0.3f * bandHeight, 0.7f * bandHeight, 0.7f * bandHeight);
+            spriteBatch.draw(textureBarracksGreen, leftSide + 3.15f * bandHeight, 0.3f * bandHeight, 0.7f * bandHeight, 0.7f * bandHeight);
+            spriteBatch.draw(textureDefenseGreen, leftSide + 2.15f * bandHeight, 0.3f * bandHeight, 0.7f * bandHeight, 0.7f * bandHeight);
+            spriteBatch.draw(textureLookoutGreen, leftSide + 1.15f * bandHeight, 0.3f * bandHeight, 0.7f * bandHeight, 0.7f * bandHeight);
+            spriteBatch.draw(textureBaseGreen, leftSide + 0.15f * bandHeight, 0.3f * bandHeight, 0.7f * bandHeight, 0.7f * bandHeight);
+            YioGdxGame.lowerBandFont.draw(spriteBatch, "$" + GameController.PRICE_BASE, leftSide + 0.3f * bandHeight, 0.3f * bandHeight); // 한글자여서 0.3
+            YioGdxGame.lowerBandFont.draw(spriteBatch, "$" + GameController.PRICE_LOOKOUT, leftSide + 1.2f * bandHeight, 0.3f * bandHeight);
+            YioGdxGame.lowerBandFont.draw(spriteBatch, "$" + GameController.PRICE_DEFENSE, leftSide + 2.2f * bandHeight, 0.3f * bandHeight);
+            YioGdxGame.lowerBandFont.draw(spriteBatch, "$" + GameController.PRICE_BARRACKS, leftSide + 3.2f * bandHeight, 0.3f * bandHeight);
+            YioGdxGame.lowerBandFont.draw(spriteBatch, "$" + GameController.PRICE_EXTRACTOR, leftSide + 4.2f * bandHeight, 0.3f * bandHeight);
+        } else if(socket == 1){
+            spriteBatch.draw(textureEMPGreen, leftSide + 4.15f * bandHeight, 0.3f * bandHeight, 0.7f * bandHeight, 0.7f * bandHeight);
+            spriteBatch.draw(textureAirForceGreen, leftSide + 3.15f * bandHeight, 0.3f * bandHeight, 0.7f * bandHeight, 0.7f * bandHeight);
+            spriteBatch.draw(textureAcademyGreen, leftSide + 2.15f * bandHeight, 0.3f * bandHeight, 0.7f * bandHeight, 0.7f * bandHeight);
+            spriteBatch.draw(textureCannonGreen, leftSide + 1.15f * bandHeight, 0.3f * bandHeight, 0.7f * bandHeight, 0.7f * bandHeight);
+            spriteBatch.draw(textureBarricadeGreen, leftSide + 0.15f * bandHeight, 0.3f * bandHeight, 0.7f * bandHeight, 0.7f * bandHeight);
+            YioGdxGame.lowerBandFont.draw(spriteBatch, "$" + GameController.PRICE_BARRICADE, leftSide + 0.2f * bandHeight, 0.3f * bandHeight);
+            YioGdxGame.lowerBandFont.draw(spriteBatch, "$" + GameController.PRICE_CANNON, leftSide + 1.2f * bandHeight, 0.3f * bandHeight);
+            YioGdxGame.lowerBandFont.draw(spriteBatch, "$" + GameController.PRICE_ACADEMY, leftSide + 2.2f * bandHeight, 0.3f * bandHeight);
+            YioGdxGame.lowerBandFont.draw(spriteBatch, "$" + GameController.PRICE_AIRFORCE, leftSide + 3.2f * bandHeight, 0.3f * bandHeight);
+            YioGdxGame.lowerBandFont.draw(spriteBatch, "$" + GameController.PRICE_EMP, leftSide + 4.1f * bandHeight, 0.3f * bandHeight); // 세글자여서 0.1
+        }
         spriteBatch.end();
 
         Texture texture = frameBuffer.getColorBufferTexture();
@@ -251,6 +289,7 @@ public class GameView {
         renderBubbles();
         renderUnits();
         renderDollarAnims();
+        //renderShieldAnims();
         renderBeams();
         renderGraph(gameController.greenGraph);
         renderGraph(gameController.redGraph);
@@ -284,7 +323,10 @@ public class GameView {
             beam = gameController.beams[i];
             if (beam.isVisible()) {
                 thickness = (float) beam.factorModelLighty.factor() * beamThickness;
-                spriteBatch.draw(beamTexture, beam.x, beam.y - thickness * 0.5f, 0f, thickness * 0.5f, beam.length, thickness, 1f, 1f, (float) (180 / Math.PI * beam.a));
+                if(beam.type == 0)
+                    spriteBatch.draw(beamTexture, beam.x, beam.y - thickness * 0.5f, 0f, thickness * 0.5f, beam.length, thickness, 1f, 1f, (float) (180 / Math.PI * beam.a));
+                else if(beam.type == 1)
+                    spriteBatch.draw(laserTexture, beam.x, beam.y - thickness * 0.25f, 0f, thickness * 0.25f, beam.length, thickness * 0.5f, 1f, 1f, (float) (180 / Math.PI * beam.a));
             }
         }
     }
@@ -314,6 +356,7 @@ public class GameView {
             spriteBatch.draw(dollarTexture, point.x - 0.5f * f * moduleSize, point.y + 0.5f * (1f - f) * moduleSize, f * moduleSize, 0.5f * moduleSize);
         }
     }
+
 
 
     void renderCurrentMoney() {
@@ -388,7 +431,7 @@ public class GameView {
         if (gameController.isBinButtonPressed) {
             spriteBatch.draw(blackPixel, 0, Gdx.graphics.getHeight() - bandHeight, bandHeight, bandHeight);
         }
-        if (gameController.dragModuleTexture != null) {
+        if (gameController.dragModuleTexture != null || gameController.dragType == gameController.CHANGE_SOCKET) {
             spriteBatch.draw(blackPixel, gameController.getPressedModuleButtonPosition(), 0, bandHeight, bandHeight);
         }
         spriteBatch.setColor(c.r, c.g, c.b, 1);
@@ -478,7 +521,7 @@ public class GameView {
         }
 
         renderConstructingModules(graph);
-        for (int i = 0; i < 5; i++) renderModulesByIndexAndAppurtenance(i, graph.appurtenance, graph);
+        for (int i = 0; i < 10; i++) renderModulesByIndexAndAppurtenance(i, graph.appurtenance, graph);
         renderFissures(graph);
     }
 
@@ -518,6 +561,21 @@ public class GameView {
                 case Module.MODULE_INDEX_LOOKOUT:
                     textureRegion = textureLookoutGreen;
                     break;
+                case Module.MODULE_INDEX_BARRICADE:
+                    textureRegion = textureBarricadeGreen;
+                    break;
+                case Module.MODULE_INDEX_CANNON:
+                    textureRegion = textureCannonGreen;
+                    break;
+                case Module.MODULE_INDEX_ACADEMY:
+                    textureRegion = textureAcademyGreen;
+                    break;
+                case Module.MODULE_INDEX_AIRFORCE:
+                    textureRegion = textureAirForceGreen;
+                    break;
+                case Module.MODULE_INDEX_EMP:
+                    textureRegion = textureEMPGreen;
+                    break;
             }
         } else if (appurtenance == GameController.APPURTENANCE_RED) {
             switch (index) {
@@ -536,16 +594,44 @@ public class GameView {
                 case Module.MODULE_INDEX_LOOKOUT:
                     textureRegion = textureLookoutEnemy;
                     break;
+                case Module.MODULE_INDEX_BARRICADE:
+                    textureRegion = textureBarricadeEnemy;
+                    break;
+                case Module.MODULE_INDEX_CANNON:
+                    textureRegion = textureCannonEnemy;
+                    break;
+                case Module.MODULE_INDEX_ACADEMY:
+                    textureRegion = textureAcademyEnemy;
+                    break;
+                case Module.MODULE_INDEX_AIRFORCE:
+                    textureRegion = textureAirForceEnemy;
+                    break;
+                case Module.MODULE_INDEX_EMP:
+                    textureRegion = textureEMPEnemy;
+                    break;
             }
         }
 
         for (Module module : graph.modules) {
-            if (module.isConstructing) continue;
-            if (module.appurtenance != appurtenance) continue;
-            if (module.index != index) continue;
+            if (module.isConstructing){
+                continue;
+            }
+            if (module.appurtenance != appurtenance){
+                continue;
+            }
+            if (module.index != index){
+                continue;
+            }
 
+            long currentTime = System.currentTimeMillis();
             //different methods of drawing
-            if (module.index == Module.MODULE_INDEX_BARRACKS) {
+            if (module.index == Module.MODULE_INDEX_BARRACKS || module.index == Module.MODULE_INDEX_CANNON) {
+                if(module.SHD > 0 && module.maxSHD > 0) {
+                    Color c = spriteBatch.getColor();
+                    spriteBatch.setColor(c.r, c.g, c.b, (float) module.SHD / module.maxSHD);
+                    spriteBatch.draw(shieldTexture, (float) module.visualX - 0.5f * moduleSize, (float) module.visualY - 0.5f * moduleSize, moduleSize, moduleSize);
+                    spriteBatch.setColor(c.r, c.g, c.b, 1f);
+                }
                 spriteBatch.draw(textureRegion,
                         (float) module.visualX - 0.5f * moduleSize,
                         (float) module.visualY - 0.5f * moduleSize,
@@ -556,8 +642,62 @@ public class GameView {
                         1f, 1f, (float) module.rotationAngle);
             } else if (module.index == Module.MODULE_INDEX_DEFENSE || module.index == Module.MODULE_INDEX_EXTRACTOR) {
                 float k = 0.5f + 0.05f * (float) Math.sin(0.125 * module.rotationAngle);
+                if(module.SHD > 0 && module.maxSHD > 0) {
+                    Color c = spriteBatch.getColor();
+                    spriteBatch.setColor(c.r, c.g, c.b, (float) module.SHD / module.maxSHD);
+                    spriteBatch.draw(shieldTexture, (float) module.visualX - k * moduleSize, (float) module.visualY - k * moduleSize, 2 * k * moduleSize, 2 * k * moduleSize);
+                    spriteBatch.setColor(c.r, c.g, c.b, 1f);
+                }
                 spriteBatch.draw(textureRegion, (float) module.visualX - k * moduleSize, (float) module.visualY - k * moduleSize, 2 * k * moduleSize, 2 * k * moduleSize);
-            } else {
+            }/* else if (module.index == Module.MODULE_INDEX_CANNON) {
+                if( currentTime > ((ModuleCannon)module).lastTimeAttacked + ((ModuleCannon)module).attackDelay){
+                    if(module.SHD > 0 && module.maxSHD > 0) {
+                        Color c = spriteBatch.getColor();
+                        spriteBatch.setColor(c.r, c.g, c.b, (float) module.SHD / module.maxSHD);
+                        spriteBatch.draw(shieldTexture, (float) module.visualX - 0.5f * moduleSize, (float) module.visualY - 0.5f * moduleSize, moduleSize, moduleSize);
+                        spriteBatch.setColor(c.r, c.g, c.b, 1f);
+                    }
+                    spriteBatch.draw(textureRegion,
+                            (float) module.visualX - 0.5f * moduleSize,
+                            (float) module.visualY - 0.5f * moduleSize,
+                            0.5f * moduleSize,
+                            0.5f * moduleSize,
+                            moduleSize,
+                            moduleSize,
+                            1f, 1f, (float) module.rotationAngle);
+                } else{
+                    float k = (((float)(-currentTime + ((ModuleCannon)module).lastTimeAttacked) / ((ModuleCannon)module).attackDelay) / 3 + 1) / 2;
+                    System.out.println(k);
+                    if(module.SHD > 0 && module.maxSHD > 0) {
+                        Color c = spriteBatch.getColor();
+                        spriteBatch.setColor(c.r, c.g, c.b, (float) module.SHD / module.maxSHD);
+                        spriteBatch.draw(shieldTexture,
+                                (float) module.visualX - k * moduleSize,
+                                (float) module.visualY - k * moduleSize,
+                                k * moduleSize,
+                                k * moduleSize,
+                                moduleSize,
+                                moduleSize,
+                                2 * k, 2 * k, (float) module.rotationAngle);
+                        spriteBatch.setColor(c.r, c.g, c.b, 1f);
+                    }
+                    spriteBatch.draw(textureRegion,
+                            (float) module.visualX - k * moduleSize,
+                            (float) module.visualY - k * moduleSize,
+                            k * moduleSize,
+                            k * moduleSize,
+                            moduleSize,
+                            moduleSize,
+                            2 * k, 2 * k, (float) module.rotationAngle);
+                }
+
+            } */else{
+                if(module.SHD > 0 && module.maxSHD > 0) {
+                    Color c = spriteBatch.getColor();
+                    spriteBatch.setColor(c.r, c.g, c.b, (float) module.SHD / module.maxSHD);
+                    spriteBatch.draw(shieldTexture, (float) module.visualX - 0.5f * moduleSize, (float) module.visualY - 0.5f * moduleSize, moduleSize, moduleSize);
+                    spriteBatch.setColor(c.r, c.g, c.b, 1f);
+                }
                 spriteBatch.draw(textureRegion, (float) module.visualX - 0.5f * moduleSize, (float) module.visualY - 0.5f * moduleSize, moduleSize, moduleSize);
             }
         }

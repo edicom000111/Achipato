@@ -1,6 +1,5 @@
 package yio.tro.achipato;
 
-import android.util.Log;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;

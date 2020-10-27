@@ -14,6 +14,11 @@ public class LevelCreator {
     public static final int ID_DEFENSE = Module.MODULE_INDEX_DEFENSE;
     public static final int ID_BARRACKS = Module.MODULE_INDEX_BARRACKS;
     public static final int ID_EXTRACTOR = Module.MODULE_INDEX_EXTRACTOR;
+    public static final int ID_BARRICADE = Module.MODULE_INDEX_BARRICADE;
+    public static final int ID_CANNON = Module.MODULE_INDEX_CANNON;
+    public static final int ID_ACADEMY = Module.MODULE_INDEX_ACADEMY;
+    public static final int ID_AIRFORCE = Module.MODULE_INDEX_AIRFORCE;
+    public static final int ID_EMP = Module.MODULE_INDEX_EMP;
     YioGdxGame yioGdxGame;
     GameController gameController;
     MenuControllerLighty menuControllerLighty;
@@ -59,17 +64,29 @@ public class LevelCreator {
                 spawnArmy(0.95, 0.85, 50, appRed);
                 break;
             case 1:
-                setMoney(1000, 0);
+
+                setMoney(1000, 10000);
                 putObstacle(0, 0.9, 0.5);
                 buildModule(0.05, 0.15, ID_LOOKOUT, appGreen);
                 buildModule(0.95, 0.85, ID_BASE, appRed);
                 for (int i=0; i<10; i++) {
                     buildModule(0.1 + 0.8 * random.nextDouble(), 0.15 + 0.2 * random.nextDouble(), ID_BARRACKS, appGreen);
-                    buildModule(0.5 + 0.45 * random.nextDouble(), 0.6 + 0.35 * random.nextDouble(), ID_DEFENSE, appRed);
+                    //buildModule(0.5 + 0.45 * random.nextDouble(), 0.6 + 0.35 * random.nextDouble(), ID_DEFENSE, appRed);
                 }
                 buildModule(0.3, 0.4, ID_LOOKOUT, appGreen);
                 buildModule(0.7, 0.4, ID_LOOKOUT, appGreen);
-                spawnArmy(0.3, 0.4, 50, appGreen);
+                spawnArmy(0.3, 0.4, 50, appGreen);/*
+
+
+                setMoney(10000, 0);
+                putObstacle(0, 0.9, 0.5);
+                buildModule(0.25, 0.15, ID_CANNON, appGreen);
+                buildModule(0.05, 0.15, ID_DEFENSE, appGreen);
+                buildModule(0.95, 0.85, ID_BASE, appRed);
+                for (int i=0; i<10; i++) {
+                    buildModule(0.5 + 0.45 * random.nextDouble(), 0.6 + 0.35 * random.nextDouble(), ID_BARRACKS, appRed);
+                }
+                spawnArmy(0.3, 0.4, 100, appRed);*/
                 break;
             case 2:
                 setMoney(500, 0);
@@ -421,6 +438,11 @@ public class LevelCreator {
             case ID_EXTRACTOR: module = new ModuleExtractor(x, y, app, graph); break;
             case ID_BARRACKS: module = new ModuleBarracks(x, y, app, graph); break;
             case ID_LOOKOUT: module = new ModuleLookout(x, y, app, graph); break;
+            case ID_BARRICADE: module = new ModuleBarricade(x, y, app, graph); break;
+            case ID_CANNON: module = new ModuleCannon(x, y, app, graph); break;
+            case ID_ACADEMY: module = new ModuleAcademy(x, y, app, graph); break;
+            case ID_AIRFORCE: module = new ModuleAirForce(x, y, app, graph); break;
+            case ID_EMP: module = new ModuleEMP(x, y, app, graph); break;
         }
         buildModule(module);
     }

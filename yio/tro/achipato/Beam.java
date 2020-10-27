@@ -6,6 +6,7 @@ package yio.tro.achipato;
 public class Beam {
     float x, y, a, length;
     FactorModelLighty factorModelLighty;
+    int type = 0;
 
     public Beam() {
         factorModelLighty = new FactorModelLighty();

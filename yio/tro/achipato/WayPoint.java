@@ -1,6 +1,5 @@
 package yio.tro.achipato;
 
-import android.util.Log;
 
 import java.util.ArrayList;
 

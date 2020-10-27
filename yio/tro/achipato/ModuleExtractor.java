@@ -11,7 +11,7 @@ public class ModuleExtractor extends Module {
     public ModuleExtractor(double x, double y, int appurtenance, Graph graph) {
         super(x, y, appurtenance, graph);
         timeToEndConstruction = System.currentTimeMillis() + 5000;
-        moneySpawnDelay = 2500;
+        moneySpawnDelay = 1500;
         price = GameController.PRICE_EXTRACTOR;
         maxHP = hp = 10;
         index = MODULE_INDEX_EXTRACTOR;
